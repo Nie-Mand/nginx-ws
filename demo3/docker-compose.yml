@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  jupiter:
+    build: ./server
+    environment:
+      - NAME=jupiter
+    ports:
+      - 81:80
+    networks:
+      internal:
+
+  lily:
+    build: ./server
+    environment:
+      - NAME=lily
+    ports:
+      - 82:80
+    networks:
+      internal:
+
+  load-balancer:
+    build: ./load-balancer
+    ports:
+      - 80:80
+    depends_on:
+      - jupiter
+      - lily
+    networks:
+      internal:
+
+
+
+networks:
+  internal:
+    internal: true

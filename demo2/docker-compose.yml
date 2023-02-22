@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  jupiter:
+    build: ./server
+    environment:
+      - NAME=jupiter
+    ports:
+      - 81:80
+  lily:
+    build: ./server
+    environment:
+      - NAME=lily
+    ports:
+      - 82:80
+
+  reverse-proxy:
+    build: ./reverse-proxy
+    ports:
+      - 80:80
+    depends_on:
+      - jupiter
+      - lily
